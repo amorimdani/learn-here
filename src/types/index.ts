@@ -73,6 +73,12 @@ export interface TechDeepDive {
     explanation: string;
     internals: string;
   }[];
+  architectureDiagram?: {
+    title: string;
+    caption: string;
+    type: string;
+    svgContent: string;
+  };
   codeExamples: CodeSnippet[];
   gettingStartedRoadmap: {
     step: number;

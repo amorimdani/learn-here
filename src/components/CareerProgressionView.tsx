@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Compass,
-  DollarSign,
   Clock,
   CheckCircle2,
   AlertTriangle,
@@ -109,33 +108,29 @@ export const CareerProgressionView: React.FC<CareerProgressionViewProps> = ({
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      {/* Hero Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 border border-indigo-900/40 p-6 sm:p-8 shadow-2xl">
-        <div className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-semibold">
-            <Compass className="w-3.5 h-3.5" />
-            Global Engineering Career Rubric
+    <div className="space-y-6 animate-fade-in text-zinc-200">
+      {/* Minimalist Classic Header */}
+      <div className="border-b border-zinc-800 pb-5 space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+          <div>
+            <span className="text-[11px] font-mono uppercase text-zinc-500 tracking-wider">
+              Engineering Career Rubric
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-100 font-serif-classic">
+              Career Progression & Seniority Levels
+            </h1>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-            Engineering Career Progression & Seniority Hierarchy
-          </h1>
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Navigate the clear roadmap from entry-level Junior to Principal / Staff Engineer.
-            Master the precise expectations, compensation benchmarks, production workflows,
-            and system design criteria demanded by top-tier global tech platforms.
-          </p>
-          <div className="pt-2 flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2">
             <button
               onClick={() => {
                 setQuizActive(true);
                 setQuizAnswers([]);
                 setQuizResult(null);
               }}
-              className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs sm:text-sm shadow-lg shadow-indigo-600/30 transition flex items-center gap-2"
+              className="px-3 py-1 rounded bg-zinc-100 hover:bg-white text-zinc-950 font-medium text-xs transition font-mono flex items-center gap-1.5"
             >
-              <Sparkles className="w-4 h-4" />
-              Take Seniority Self-Assessment Quiz
+              <Sparkles className="w-3 h-3" />
+              <span>Self-Assessment</span>
             </button>
             <button
               onClick={() =>
@@ -145,65 +140,71 @@ export const CareerProgressionView: React.FC<CareerProgressionViewProps> = ({
                   category: 'Career Level'
                 })
               }
-              className={`px-4 py-2 rounded-xl border text-xs sm:text-sm font-medium transition flex items-center gap-2 ${
+              className={`px-3 py-1 rounded border text-xs font-mono transition flex items-center gap-1.5 ${
                 isBookmarked(levelData.id)
-                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
-                  : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800'
+                  ? 'bg-zinc-800 border-zinc-600 text-zinc-200'
+                  : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-zinc-200'
               }`}
             >
-              <Award className="w-4 h-4" />
-              {isBookmarked(levelData.id) ? 'Bookmarked' : 'Bookmark this Level'}
+              <Award className="w-3 h-3" />
+              <span>{isBookmarked(levelData.id) ? 'Saved' : 'Bookmark'}</span>
             </button>
           </div>
         </div>
+        <p className="text-xs text-zinc-400 font-sans max-w-3xl leading-relaxed">
+          Standardized global rubric detailing expectations, compensation benchmarks, workflows,
+          and system design standards across Seniority Levels from Junior (L1) to Principal/Staff (L7+).
+        </p>
       </div>
 
       {/* Interactive Seniority Diagnostic Quiz Modal */}
       {quizActive && (
-        <div className="p-6 rounded-2xl bg-indigo-950/40 border border-indigo-800/60 shadow-xl space-y-5 animate-fade-in">
+        <div className="p-5 rounded border border-zinc-700 bg-[#0e0e11] space-y-4 animate-fade-in">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-indigo-400" />
-              <h3 className="font-bold text-white text-base">Seniority Level Diagnostic Assessment</h3>
+              <Sparkles className="w-4 h-4 text-zinc-300" />
+              <h3 className="font-semibold text-xs font-mono uppercase text-zinc-200">
+                Seniority Level Diagnostic Assessment
+              </h3>
             </div>
-            <button onClick={resetQuiz} className="text-xs text-slate-400 hover:text-white">
-              Close Assessment
+            <button onClick={resetQuiz} className="text-xs text-zinc-400 hover:text-zinc-200 font-mono">
+              Close [x]
             </button>
           </div>
 
           {!quizResult ? (
-            <div className="space-y-4">
-              <div className="text-xs text-indigo-300 font-mono">
+            <div className="space-y-3">
+              <div className="text-[11px] text-zinc-500 font-mono">
                 Question {quizAnswers.length + 1} of {quizQuestions.length}
               </div>
-              <h4 className="text-lg font-semibold text-slate-100">
+              <h4 className="text-sm font-semibold text-zinc-100">
                 {quizQuestions[quizAnswers.length].question}
               </h4>
-              <div className="grid grid-cols-1 gap-2.5">
+              <div className="grid grid-cols-1 gap-2">
                 {quizQuestions[quizAnswers.length].options.map((opt, idx) => (
                   <button
                     key={idx}
                     onClick={() => handleQuizAnswer(opt.score)}
-                    className="p-3 text-left rounded-xl bg-slate-900 hover:bg-indigo-900/50 border border-slate-800 hover:border-indigo-600/50 text-slate-200 text-xs sm:text-sm transition flex items-center justify-between group"
+                    className="p-3 text-left rounded bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-zinc-700 text-zinc-300 text-xs transition flex items-center justify-between group"
                   >
                     <span>{opt.text}</span>
-                    <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-indigo-400 transition" />
+                    <ArrowRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-zinc-300 transition" />
                   </button>
                 ))}
               </div>
             </div>
           ) : (
-            <div className="p-4 rounded-xl bg-emerald-950/40 border border-emerald-800/50 space-y-3">
-              <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
-                <CheckCircle2 className="w-5 h-5" />
+            <div className="p-4 rounded bg-zinc-900 border border-zinc-800 space-y-2">
+              <div className="flex items-center gap-2 text-zinc-200 font-semibold text-xs font-mono uppercase">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                 Assessment Result:
               </div>
-              <p className="text-emerald-100 font-semibold text-base">{quizResult}</p>
+              <p className="text-zinc-200 font-medium text-xs sm:text-sm">{quizResult}</p>
               <button
                 onClick={resetQuiz}
-                className="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-medium hover:bg-emerald-500"
+                className="px-2.5 py-1 rounded bg-zinc-800 text-zinc-200 text-xs font-mono hover:bg-zinc-700 mt-1"
               >
-                Done
+                Close Assessment
               </button>
             </div>
           )}
@@ -211,96 +212,91 @@ export const CareerProgressionView: React.FC<CareerProgressionViewProps> = ({
       )}
 
       {/* Seniority Level Tabs */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
         {careerLevelsData.map((level) => {
           const isSelected = activeLevel === level.id;
           return (
             <button
               key={level.id}
               onClick={() => setActiveLevel(level.id)}
-              className={`p-4 rounded-xl text-left border transition-all ${
+              className={`p-3.5 rounded border text-left transition ${
                 isSelected
-                  ? 'bg-slate-900 border-indigo-500 shadow-lg shadow-indigo-500/10 ring-1 ring-indigo-500'
-                  : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 hover:bg-slate-900'
+                  ? 'bg-zinc-900 border-zinc-600 text-zinc-100 shadow-sm'
+                  : 'bg-[#0e0e11] border-zinc-900/80 hover:bg-zinc-900/40 hover:border-zinc-800 text-zinc-400'
               }`}
             >
-              <div className="flex items-center justify-between mb-1.5">
+              <div className="flex items-center justify-between mb-1">
                 <span
-                  className={`text-[11px] font-mono font-bold uppercase px-2 py-0.5 rounded ${
+                  className={`text-[9px] font-mono uppercase px-1.5 py-0.2 rounded ${
                     isSelected
-                      ? 'bg-indigo-500/20 text-indigo-300'
-                      : 'bg-slate-800 text-slate-400'
+                      ? 'bg-zinc-800 text-zinc-200 font-semibold'
+                      : 'bg-zinc-850 text-zinc-500'
                   }`}
                 >
                   {level.badge}
                 </span>
               </div>
-              <h3 className="font-bold text-sm text-slate-100 mb-1">{level.title}</h3>
-              <p className="text-xs text-slate-400 font-mono">{level.experienceYears}</p>
+              <h3 className="font-semibold text-xs text-zinc-200 mb-0.5">{level.title}</h3>
+              <p className="text-[11px] text-zinc-500 font-mono">{level.experienceYears}</p>
             </button>
           );
         })}
       </div>
 
       {/* Selected Seniority Deep Dive Content */}
-      <div className="space-y-8">
+      <div className="space-y-6">
         {/* Core Metadata Card */}
-        <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+        <div className="p-6 rounded border border-zinc-800 bg-[#0e0e11] space-y-3">
+          <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-3 pb-3 border-b border-zinc-800/80">
             <div>
-              <span className="text-xs font-mono text-indigo-400 font-semibold uppercase tracking-wider">
-                Seniority Level Profile
+              <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">
+                Seniority Profile
               </span>
-              <h2 className="text-2xl font-black text-white mt-0.5">{levelData.title}</h2>
-              <p className="text-slate-400 text-xs italic mt-1">{levelData.tagline}</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-zinc-100 mt-0.5 font-serif-classic">
+                {levelData.title}
+              </h2>
+              <p className="text-zinc-400 text-xs mt-0.5 italic">{levelData.tagline}</p>
             </div>
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-850 border border-slate-800">
-                <Clock className="w-4 h-4 text-cyan-400" />
-                <div>
-                  <div className="text-[10px] text-slate-400 uppercase font-mono">Experience</div>
-                  <div className="text-xs font-bold text-slate-200">{levelData.experienceYears}</div>
-                </div>
+            <div className="flex flex-wrap items-center gap-3 font-mono text-xs">
+              <div className="p-2 rounded bg-zinc-900 border border-zinc-800">
+                <span className="text-[9px] text-zinc-500 uppercase block">Experience</span>
+                <span className="text-zinc-200 font-semibold">{levelData.experienceYears}</span>
               </div>
-              <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-850 border border-slate-800">
-                <DollarSign className="w-4 h-4 text-emerald-400" />
-                <div>
-                  <div className="text-[10px] text-slate-400 uppercase font-mono">Compensation (Global Tier 1)</div>
-                  <div className="text-xs font-bold text-emerald-300">{levelData.compensationRange}</div>
-                </div>
+              <div className="p-2 rounded bg-zinc-900 border border-zinc-800">
+                <span className="text-[9px] text-zinc-500 uppercase block">Compensation (Tier 1)</span>
+                <span className="text-zinc-200 font-semibold">{levelData.compensationRange}</span>
               </div>
             </div>
           </div>
-          <p className="text-slate-300 text-sm leading-relaxed">{levelData.summary}</p>
+          <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed">{levelData.summary}</p>
         </div>
 
         {/* Core Market-Demanded Languages & Concrete Code Quality */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Layers className="w-5 h-5 text-indigo-400" />
-            <h3 className="text-xl font-bold text-white">Core Languages & Expected Production Code Quality</h3>
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-zinc-300">
+            <Layers className="w-4 h-4 text-zinc-400" />
+            <h3 className="text-sm font-semibold tracking-wide uppercase font-mono">
+              Core Languages & Production Code Quality
+            </h3>
           </div>
-          <p className="text-slate-400 text-xs">
-            How code written at this seniority level differentiates itself in error handling, type safety, and concurrency.
-          </p>
-          <div className="grid grid-cols-1 gap-6">
+          <div className="grid grid-cols-1 gap-4">
             {levelData.coreLanguages.map((lang, idx) => (
-              <div key={idx} className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+              <div key={idx} className="p-4 rounded border border-zinc-800 bg-[#0e0e11] space-y-2">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="font-extrabold text-base text-white">{lang.name}</span>
-                    <span className="text-xs font-mono text-slate-400">({lang.role})</span>
+                    <span className="font-semibold text-xs text-zinc-100">{lang.name}</span>
+                    <span className="text-[11px] font-mono text-zinc-500">({lang.role})</span>
                   </div>
-                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800/60 font-semibold">
-                    Market Demand: {lang.marketDemand}
+                  <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-zinc-800 text-zinc-400">
+                    Demand: {lang.marketDemand}
                   </span>
                 </div>
-                <p className="text-xs text-slate-300">{lang.description}</p>
+                <p className="text-xs text-zinc-300">{lang.description}</p>
                 <CodeBlock
                   code={lang.codeExample}
                   language={lang.name.toLowerCase().includes('python') ? 'python' : lang.name.toLowerCase().includes('sql') ? 'sql' : lang.name.toLowerCase().includes('go') ? 'go' : lang.name.toLowerCase().includes('rust') ? 'rust' : 'typescript'}
-                  title={`Production Standard Code (${lang.name})`}
-                  explanation={`Exemplifies how ${levelData.badge} engineers structure defensive validation, error propagation, and concurrency.`}
+                  title={`Production Standard (${lang.name})`}
+                  explanation={`Standard ${levelData.badge} error handling, defensive parsing, and concurrency.`}
                 />
               </div>
             ))}
@@ -308,21 +304,23 @@ export const CareerProgressionView: React.FC<CareerProgressionViewProps> = ({
         </div>
 
         {/* Global Market Workflows & Methodologies */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Compass className="w-5 h-5 text-cyan-400" />
-            <h3 className="text-xl font-bold text-white">Market Workflows & Engineering Methodologies</h3>
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-zinc-300">
+            <Compass className="w-4 h-4 text-zinc-400" />
+            <h3 className="text-sm font-semibold tracking-wide uppercase font-mono">
+              Market Workflows & Engineering Operations
+            </h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {levelData.workflows.map((wf, idx) => (
-              <div key={idx} className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-2 flex flex-col justify-between">
+              <div key={idx} className="p-4 rounded border border-zinc-800 bg-[#0e0e11] space-y-2 flex flex-col justify-between">
                 <div>
-                  <h4 className="font-bold text-sm text-slate-100">{wf.name}</h4>
-                  <p className="text-xs text-slate-300 mt-2 leading-relaxed">{wf.description}</p>
+                  <h4 className="font-semibold text-xs text-zinc-100">{wf.name}</h4>
+                  <p className="text-xs text-zinc-400 mt-1 leading-relaxed">{wf.description}</p>
                 </div>
-                <div className="pt-3 border-t border-slate-800">
-                  <span className="text-[10px] uppercase font-mono text-slate-500 block">Industry Standard:</span>
-                  <span className="text-xs font-mono text-indigo-300">{wf.marketStandard}</span>
+                <div className="pt-2 border-t border-zinc-850">
+                  <span className="text-[9px] uppercase font-mono text-zinc-500 block">Industry Standard:</span>
+                  <span className="text-xs font-mono text-zinc-300">{wf.marketStandard}</span>
                 </div>
               </div>
             ))}
@@ -330,36 +328,38 @@ export const CareerProgressionView: React.FC<CareerProgressionViewProps> = ({
         </div>
 
         {/* System Design Expectations */}
-        <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
-          <div className="flex items-center gap-2">
-            <Layers className="w-5 h-5 text-amber-400" />
-            <h3 className="text-lg font-bold text-white">System Design Expectations for this Level</h3>
+        <div className="p-5 rounded border border-zinc-800 bg-[#0e0e11] space-y-3">
+          <div className="flex items-center gap-2 text-zinc-300">
+            <Layers className="w-4 h-4 text-zinc-400" />
+            <h3 className="text-sm font-semibold tracking-wide uppercase font-mono">
+              System Design Expectations
+            </h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2 text-xs">
               <div>
-                <span className="text-xs font-mono text-slate-400 uppercase">Design Scope:</span>
-                <p className="font-semibold text-slate-200 text-sm mt-0.5">{levelData.systemDesignExpectations.scope}</p>
+                <span className="font-mono text-zinc-500 uppercase text-[10px]">Scope:</span>
+                <p className="font-semibold text-zinc-200 mt-0.5">{levelData.systemDesignExpectations.scope}</p>
               </div>
               <div>
-                <span className="text-xs font-mono text-slate-400 uppercase">Key Required Concepts:</span>
-                <ul className="mt-1.5 space-y-1.5">
+                <span className="font-mono text-zinc-500 uppercase text-[10px]">Required Concepts:</span>
+                <ul className="mt-1 space-y-1">
                   {levelData.systemDesignExpectations.keySkills.map((skill, idx) => (
-                    <li key={idx} className="text-xs text-slate-300 flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 inline-block"></span>
+                    <li key={idx} className="text-zinc-300 flex items-center gap-1.5">
+                      <span className="w-1 h-1 rounded-full bg-zinc-500 inline-block"></span>
                       {skill}
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
-            <div className="p-4 rounded-xl bg-slate-850 border border-slate-700/60 space-y-2">
-              <span className="text-[11px] font-mono font-bold text-indigo-400 uppercase">
+            <div className="p-3 rounded bg-zinc-900 border border-zinc-800 space-y-1.5 text-xs">
+              <span className="text-[10px] font-mono text-zinc-400 uppercase font-semibold">
                 Sample Interview Challenge
               </span>
-              <p className="text-xs font-medium text-white">{levelData.systemDesignExpectations.sampleProblem}</p>
-              <div className="pt-2 text-xs text-slate-300 border-t border-slate-800">
-                <span className="text-slate-400 font-semibold">Recommended Architecture: </span>
+              <p className="font-medium text-zinc-100">{levelData.systemDesignExpectations.sampleProblem}</p>
+              <div className="pt-1.5 text-zinc-400 border-t border-zinc-800 font-sans">
+                <span className="text-zinc-300 font-semibold font-mono text-[11px]">Recommended: </span>
                 {levelData.systemDesignExpectations.recommendedApproach}
               </div>
             </div>
@@ -367,64 +367,66 @@ export const CareerProgressionView: React.FC<CareerProgressionViewProps> = ({
         </div>
 
         {/* Day in the Life Timeline */}
-        <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
-          <div className="flex items-center gap-2">
-            <Clock className="w-5 h-5 text-purple-400" />
-            <h3 className="text-lg font-bold text-white">Day in the Life of a {levelData.title}</h3>
+        <div className="p-5 rounded border border-zinc-800 bg-[#0e0e11] space-y-3">
+          <div className="flex items-center gap-2 text-zinc-300">
+            <Clock className="w-4 h-4 text-zinc-400" />
+            <h3 className="text-sm font-semibold tracking-wide uppercase font-mono">
+              Day in the Life: {levelData.title}
+            </h3>
           </div>
-          <div className="divide-y divide-slate-800">
+          <div className="divide-y divide-zinc-850">
             {levelData.dayInTheLife.map((item, idx) => (
-              <div key={idx} className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div key={idx} className="py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
                 <div className="flex items-center gap-3">
-                  <span className="font-mono text-xs text-indigo-400 font-bold w-20">{item.time}</span>
-                  <span className="font-semibold text-slate-200 text-xs sm:text-sm">{item.activity}</span>
+                  <span className="font-mono text-zinc-400 font-semibold w-18">{item.time}</span>
+                  <span className="font-medium text-zinc-200">{item.activity}</span>
                 </div>
-                <p className="text-xs text-slate-400 sm:max-w-md">{item.detail}</p>
+                <p className="text-zinc-400 sm:max-w-md">{item.detail}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Promotion Checklist & Anti-Patterns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Interactive Promotion Readiness Checklist */}
-          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+          <div className="p-5 rounded border border-zinc-800 bg-[#0e0e11] space-y-3">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                <h3 className="font-bold text-white text-base">Promotion Readiness Checklist</h3>
+              <div className="flex items-center gap-2 text-zinc-300">
+                <CheckCircle2 className="w-4 h-4 text-zinc-400" />
+                <h3 className="font-semibold text-xs font-mono uppercase">Promotion Checklist</h3>
               </div>
-              <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800/60">
-                {progressPercentage}% Ready
+              <span className="text-[10px] font-mono text-zinc-300 bg-zinc-800 px-2 py-0.5 rounded border border-zinc-700">
+                {progressPercentage}% Completed
               </span>
             </div>
-            <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+            <div className="w-full bg-zinc-800 h-1 rounded overflow-hidden">
               <div
-                className="bg-emerald-500 h-full transition-all duration-300"
+                className="bg-zinc-200 h-full transition-all duration-300"
                 style={{ width: `${progressPercentage}%` }}
               ></div>
             </div>
-            <ul className="space-y-2.5">
+            <ul className="space-y-1.5">
               {levelData.promotionChecklist.map((task, idx) => {
                 const isChecked = !!completedTasks[task];
                 return (
                   <li
                     key={idx}
                     onClick={() => toggleChecklist(task)}
-                    className="flex items-start gap-3 p-2.5 rounded-xl cursor-pointer hover:bg-slate-850 transition"
+                    className="flex items-start gap-2.5 p-2 rounded cursor-pointer hover:bg-zinc-900 transition text-xs"
                   >
                     <div
-                      className={`w-4 h-4 rounded mt-0.5 flex items-center justify-center border transition ${
+                      className={`w-3.5 h-3.5 rounded mt-0.5 flex items-center justify-center border transition ${
                         isChecked
-                          ? 'bg-emerald-500 border-emerald-500 text-white'
-                          : 'border-slate-600 bg-slate-800'
+                          ? 'bg-zinc-200 border-zinc-200 text-zinc-950'
+                          : 'border-zinc-700 bg-zinc-900'
                       }`}
                     >
-                      {isChecked && <CheckCircle2 className="w-3.5 h-3.5 stroke-[3]" />}
+                      {isChecked && <CheckCircle2 className="w-3 h-3 stroke-[3]" />}
                     </div>
                     <span
                       className={`text-xs ${
-                        isChecked ? 'line-through text-slate-500' : 'text-slate-300'
+                        isChecked ? 'line-through text-zinc-500' : 'text-zinc-300'
                       }`}
                     >
                       {task}
@@ -435,19 +437,16 @@ export const CareerProgressionView: React.FC<CareerProgressionViewProps> = ({
             </ul>
           </div>
 
-          {/* Anti-Patterns & Common Traps */}
-          <div className="p-6 rounded-2xl bg-slate-900 border border-rose-950/60 space-y-4">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5 text-rose-400" />
-              <h3 className="font-bold text-white text-base">Dangerous Anti-Patterns at this Level</h3>
+          {/* Anti-Patterns */}
+          <div className="p-5 rounded border border-zinc-800 bg-[#0e0e11] space-y-3">
+            <div className="flex items-center gap-2 text-zinc-300">
+              <AlertTriangle className="w-4 h-4 text-zinc-400" />
+              <h3 className="font-semibold text-xs font-mono uppercase">Dangerous Anti-Patterns</h3>
             </div>
-            <p className="text-xs text-slate-400">
-              Habits and behaviors that stall promotions or trigger performance improvement plans (PIPs).
-            </p>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {levelData.antiPatterns.map((trap, idx) => (
-                <li key={idx} className="p-3 rounded-xl bg-rose-950/20 border border-rose-900/40 text-xs text-rose-200/90 leading-relaxed">
-                  <span className="font-bold text-rose-300 block mb-0.5">Trap #{idx + 1}:</span>
+                <li key={idx} className="p-2.5 rounded bg-zinc-900 border border-zinc-850 text-xs text-zinc-300 leading-relaxed">
+                  <span className="font-mono text-zinc-400 font-semibold block mb-0.5 text-[11px]">Pitfall #{idx + 1}:</span>
                   {trap}
                 </li>
               ))}

@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Sparkles,
-  Bot,
   BrainCircuit,
-  Cpu,
   Layers,
   Database,
   CheckCircle2,
@@ -61,37 +58,38 @@ export const AiHubView: React.FC<AiHubViewProps> = ({
   ];
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      {/* Hero Header */}
-      <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 border border-indigo-900/50 shadow-2xl space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-semibold">
-          <Sparkles className="w-3.5 h-3.5" />
-          The Complete Artificial Intelligence Hub
+    <div className="space-y-6 animate-fade-in text-zinc-200">
+      {/* Minimalist Classic Header */}
+      <div className="border-b border-zinc-800 pb-5 space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+          <div>
+            <span className="text-[11px] font-mono uppercase text-zinc-500 tracking-wider">
+              Artificial Intelligence Systems
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-100 font-serif-classic">
+              Foundations, Agents & Applied Systems
+            </h1>
+          </div>
+          <p className="text-xs text-zinc-400 font-mono">
+            {aiCatalogData.length} core deep dives
+          </p>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Everything About Artificial Intelligence
-        </h1>
-        <p className="text-slate-300 text-sm sm:text-base max-w-3xl leading-relaxed">
-          From the linear algebra of Transformer self-attention to autonomous ReAct agent loops,
-          hybrid RAG pipelines, quantization (AWQ/GGUF), Model Context Protocol (MCP), and automated CI/CD evals.
-        </p>
 
-        {/* Category Navigation Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none pt-2">
+        {/* Category Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none pt-1">
           {aiCatalogData.map((topic) => {
             const isSelected = activeTopic.id === topic.id;
             return (
               <button
                 key={topic.id}
                 onClick={() => setActiveTopicId(topic.id)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition flex items-center gap-2 ${
+                className={`px-2.5 py-1 rounded text-xs transition font-mono whitespace-nowrap ${
                   isSelected
-                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
-                    : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                    ? 'bg-zinc-100 text-zinc-950 font-semibold'
+                    : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-zinc-800'
                 }`}
               >
-                <Bot className="w-3.5 h-3.5" />
-                <span>{topic.title.split(':')[0]}</span>
+                {topic.title.split(':')[0]}
               </button>
             );
           })}
@@ -101,64 +99,63 @@ export const AiHubView: React.FC<AiHubViewProps> = ({
       {/* Main Grid: Sidebar Navigator + Topic Details */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Column: Topics List */}
-        <div className="lg:col-span-4 space-y-3">
-          <div className="text-xs font-mono uppercase text-slate-400 tracking-wider px-1">
-            Core AI Modules ({aiCatalogData.length})
+        <div className="lg:col-span-4 space-y-2">
+          <div className="text-[11px] font-mono uppercase text-zinc-500 tracking-wider px-1">
+            Index ({aiCatalogData.length})
           </div>
-          <div className="space-y-2.5">
+          <div className="space-y-1.5">
             {aiCatalogData.map((topic) => {
               const isSelected = activeTopic.id === topic.id;
               return (
                 <div
                   key={topic.id}
                   onClick={() => setActiveTopicId(topic.id)}
-                  className={`p-4 rounded-xl cursor-pointer border transition text-left ${
+                  className={`p-3 rounded border cursor-pointer transition text-left ${
                     isSelected
-                      ? 'bg-slate-900 border-indigo-500 ring-1 ring-indigo-500/40 shadow-lg'
-                      : 'bg-slate-900/60 border-slate-800/80 hover:bg-slate-850 hover:border-slate-700'
+                      ? 'bg-zinc-900 border-zinc-600 text-zinc-100'
+                      : 'bg-[#0e0e11] border-zinc-900/80 hover:bg-zinc-900/40 hover:border-zinc-800 text-zinc-400'
                   }`}
                 >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 font-semibold">
+                  <div className="flex items-center justify-between mb-0.5">
+                    <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-zinc-800 text-zinc-300">
                       {topic.category}
                     </span>
-                    <span className="text-[10px] font-mono text-slate-500">{topic.readTime}</span>
+                    <span className="text-[10px] font-mono text-zinc-500">{topic.readTime}</span>
                   </div>
-                  <h4 className="font-bold text-sm text-slate-100 mb-1">{topic.title}</h4>
-                  <p className="text-xs text-slate-400 line-clamp-1">{topic.tagline}</p>
+                  <h4 className="font-semibold text-xs text-zinc-200 mb-0.5">{topic.title}</h4>
+                  <p className="text-[11px] text-zinc-500 line-clamp-1">{topic.tagline}</p>
                 </div>
               );
             })}
           </div>
 
           {/* AI Engineering Architecture Cheat Card */}
-          <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
-            <span className="text-[11px] font-mono text-indigo-400 font-bold uppercase block">
-              Core Tech Stack in 2026
+          <div className="p-3.5 rounded border border-zinc-800 bg-[#0e0e11] space-y-1.5 text-xs font-mono">
+            <span className="text-[10px] text-zinc-400 font-semibold uppercase block">
+              Production AI Stack (2026)
             </span>
-            <ul className="text-xs text-slate-300 space-y-1">
-              <li>• <span className="font-semibold text-white">Serving:</span> vLLM, TensorRT-LLM, Ollama</li>
-              <li>• <span className="font-semibold text-white">Agents:</span> LangGraph, AutoGen, CrewAI</li>
-              <li>• <span className="font-semibold text-white">Protocols:</span> Model Context Protocol (MCP)</li>
-              <li>• <span className="font-semibold text-white">Retrieval:</span> Qdrant, Milvus, pgvector</li>
-              <li>• <span className="font-semibold text-white">Evals:</span> Ragas, LangSmith, TruLens</li>
+            <ul className="text-zinc-400 space-y-1 text-[11px]">
+              <li>• <span className="text-zinc-200 font-semibold">Serving:</span> vLLM, TensorRT-LLM, Ollama</li>
+              <li>• <span className="text-zinc-200 font-semibold">Agents:</span> LangGraph, MCP Servers</li>
+              <li>• <span className="text-zinc-200 font-semibold">Vector DBs:</span> Qdrant, Milvus, pgvector</li>
+              <li>• <span className="text-zinc-200 font-semibold">Evaluation:</span> Ragas, LLM-as-a-Judge</li>
             </ul>
           </div>
         </div>
 
         {/* Right Column: Active Topic Deep Dive */}
-        <div className="lg:col-span-8 space-y-8">
+        <div className="lg:col-span-8 space-y-6">
           {/* Header Card */}
-          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+          <div className="p-6 rounded border border-zinc-800 bg-[#0e0e11] space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 pb-3 border-b border-zinc-800/80">
               <div>
-                <span className="text-xs font-mono text-indigo-400 font-semibold uppercase tracking-wider">
+                <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
                   {activeTopic.category} • {activeTopic.difficulty}
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-black text-white mt-0.5">
+                <h2 className="text-xl sm:text-2xl font-bold text-zinc-100 mt-0.5 font-serif-classic">
                   {activeTopic.title}
                 </h2>
-                <p className="text-slate-400 text-xs sm:text-sm mt-1">{activeTopic.tagline}</p>
+                <p className="text-zinc-400 text-xs mt-0.5">{activeTopic.tagline}</p>
               </div>
               <button
                 onClick={() =>
@@ -168,41 +165,97 @@ export const AiHubView: React.FC<AiHubViewProps> = ({
                     category: 'Artificial Intelligence'
                   })
                 }
-                className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition flex items-center gap-2 ${
+                className={`px-3 py-1 rounded border text-xs font-mono transition flex items-center gap-1.5 ${
                   isBookmarked(activeTopic.id)
-                    ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
-                    : 'bg-slate-850 border-slate-700 text-slate-300 hover:bg-slate-800'
+                    ? 'bg-zinc-800 border-zinc-600 text-zinc-200'
+                    : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-zinc-200'
                 }`}
               >
-                <Award className="w-3.5 h-3.5" />
+                <Award className="w-3 h-3" />
                 {isBookmarked(activeTopic.id) ? 'Saved' : 'Save'}
               </button>
             </div>
-            <p className="text-slate-300 text-sm leading-relaxed">{activeTopic.summary}</p>
+            <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed font-sans">{activeTopic.summary}</p>
           </div>
+
+          {/* Transformer Self-Attention Schematic Illustration */}
+          {activeTopic.id === 'ai-fundamentals' && (
+            <div className="p-5 rounded border border-zinc-800 bg-[#0c0c0e] space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-xs font-mono uppercase tracking-wider text-zinc-200">
+                  Transformer Scaled Dot-Product Attention Flow
+                </span>
+                <span className="text-[10px] font-mono text-zinc-500">Vaswani et al.</span>
+              </div>
+              <div className="overflow-hidden rounded border border-zinc-800/80 bg-[#08080a] p-2">
+                <svg viewBox="0 0 700 210" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+                  <rect width="700" height="210" rx="10" fill="#09090b" stroke="#27272a"/>
+                  <text x="24" y="28" fill="#71717a" fontFamily="monospace" fontSize="10" fontWeight="bold">MATHEMATICAL ATTENTION PIPELINE: Q @ K.T / SQRT(D_K) * V</text>
+                  
+                  {/* Query Input */}
+                  <rect x="40" y="50" width="130" height="40" rx="6" fill="#18181b" stroke="#3f3f46"/>
+                  <text x="52" y="74" fill="#f4f4f5" fontFamily="monospace" fontSize="11">Queries (Q)</text>
+
+                  {/* Key Input */}
+                  <rect x="40" y="100" width="130" height="40" rx="6" fill="#18181b" stroke="#3f3f46"/>
+                  <text x="52" y="124" fill="#f4f4f5" fontFamily="monospace" fontSize="11">Keys (K)</text>
+
+                  {/* Value Input */}
+                  <rect x="40" y="150" width="130" height="40" rx="6" fill="#18181b" stroke="#3f3f46"/>
+                  <text x="52" y="174" fill="#f4f4f5" fontFamily="monospace" fontSize="11">Values (V)</text>
+
+                  {/* Dot Product & Scale */}
+                  <path d="M170 70 L230 95" stroke="#71717a" strokeWidth="1.5"/>
+                  <path d="M170 120 L230 95" stroke="#71717a" strokeWidth="1.5"/>
+                  
+                  <rect x="230" y="75" width="140" height="45" rx="6" fill="#27272a" stroke="#52525b"/>
+                  <text x="242" y="96" fill="#e4e4e7" fontFamily="monospace" fontSize="10" fontWeight="bold">MatMul &amp; Scale</text>
+                  <text x="242" y="110" fill="#a1a1aa" fontFamily="monospace" fontSize="9">/ sqrt(d_k)</text>
+
+                  {/* Softmax */}
+                  <path d="M370 97 L410 97" stroke="#71717a" strokeWidth="1.5"/>
+                  <rect x="410" y="75" width="110" height="45" rx="6" fill="#18181b" stroke="#3f3f46"/>
+                  <text x="422" y="102" fill="#38bdf8" fontFamily="monospace" fontSize="11" fontWeight="bold">Softmax</text>
+
+                  {/* Matmul with V */}
+                  <path d="M520 97 L560 125" stroke="#71717a" strokeWidth="1.5"/>
+                  <path d="M170 170 L560 145" stroke="#71717a" strokeWidth="1.5"/>
+
+                  <rect x="560" y="110" width="110" height="50" rx="6" fill="#27272a" stroke="#52525b"/>
+                  <text x="572" y="132" fill="#34d399" fontFamily="monospace" fontSize="10" fontWeight="bold">Attention(Q,K,V)</text>
+                  <text x="572" y="148" fill="#a1a1aa" fontFamily="monospace" fontSize="9">Context Vector</text>
+                </svg>
+              </div>
+              <p className="text-[11px] font-mono text-zinc-500 italic">
+                Fig 2.0 — High-dimensional dot-product cross-attention matrix transformation.
+              </p>
+            </div>
+          )}
 
           {/* Interactive Simulation Widgets */}
           {activeTopic.id === 'rag-vector-databases' && (
-            <div className="p-6 rounded-2xl bg-slate-900 border border-indigo-900/50 space-y-4 shadow-xl">
+            <div className="p-5 rounded border border-zinc-800 bg-[#0c0c0e] space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Database className="w-5 h-5 text-indigo-400" />
-                  <h3 className="font-bold text-white text-base">Interactive Hybrid RAG Simulator</h3>
+                  <Database className="w-4 h-4 text-zinc-400" />
+                  <h3 className="font-semibold text-xs font-mono uppercase text-zinc-200">
+                    Interactive Hybrid RAG Simulator
+                  </h3>
                 </div>
-                <span className="text-xs font-mono text-indigo-300 bg-indigo-950 px-2 py-0.5 rounded border border-indigo-800/60">
+                <span className="text-[10px] font-mono text-zinc-400 bg-zinc-800 px-1.5 py-0.2 rounded border border-zinc-700">
                   RRF Algorithm
                 </span>
               </div>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-zinc-400 font-sans">
                 Adjust sparse BM25 (keyword) and dense vector (semantic) weights to see how Reciprocal Rank Fusion ranks documents.
               </p>
 
-              <div className="space-y-3 bg-slate-850 p-4 rounded-xl border border-slate-800">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-3 bg-zinc-900/60 p-3.5 rounded border border-zinc-850">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
                   <div>
-                    <div className="flex justify-between text-xs text-slate-300 mb-1">
-                      <span>Vector (Dense Semantic) Weight:</span>
-                      <span className="font-mono font-bold text-indigo-400">{vectorWeight.toFixed(2)}</span>
+                    <div className="flex justify-between text-zinc-300 mb-1">
+                      <span>Vector (Dense Semantic):</span>
+                      <span className="font-bold text-zinc-100">{vectorWeight.toFixed(2)}</span>
                     </div>
                     <input
                       type="range"
@@ -211,13 +264,13 @@ export const AiHubView: React.FC<AiHubViewProps> = ({
                       step="0.05"
                       value={vectorWeight}
                       onChange={(e) => setVectorWeight(parseFloat(e.target.value))}
-                      className="w-full accent-indigo-500 cursor-pointer"
+                      className="w-full accent-zinc-200 cursor-pointer"
                     />
                   </div>
                   <div>
-                    <div className="flex justify-between text-xs text-slate-300 mb-1">
-                      <span>BM25 (Sparse Keyword) Weight:</span>
-                      <span className="font-mono font-bold text-cyan-400">{bm25Weight.toFixed(2)}</span>
+                    <div className="flex justify-between text-zinc-300 mb-1">
+                      <span>BM25 (Sparse Keyword):</span>
+                      <span className="font-bold text-zinc-100">{bm25Weight.toFixed(2)}</span>
                     </div>
                     <input
                       type="range"
@@ -226,90 +279,66 @@ export const AiHubView: React.FC<AiHubViewProps> = ({
                       step="0.05"
                       value={bm25Weight}
                       onChange={(e) => setBm25Weight(parseFloat(e.target.value))}
-                      className="w-full accent-cyan-500 cursor-pointer"
+                      className="w-full accent-zinc-200 cursor-pointer"
                     />
                   </div>
                 </div>
 
-                <div className="pt-2 text-xs font-mono text-slate-400">
-                  Simulation Target Query: <span className="text-indigo-300 font-bold">"{queryInput}"</span>
+                <div className="text-[11px] font-mono text-zinc-500">
+                  Query: <span className="text-zinc-300">"{queryInput}"</span>
                 </div>
               </div>
 
               {/* Fused Results List */}
-              <div className="space-y-2">
-                <span className="text-xs font-mono uppercase text-slate-400 font-bold">Fused RRF Rankings:</span>
-                <div className="space-y-2">
-                  {[
-                    { title: 'Doc 1: Linux epoll(7) Kernel I/O Multiplexing Deep Dive', vectorScore: 0.94, bm25Score: 0.98 },
-                    { title: 'Doc 2: Non-Blocking Socket Operations and EPOLLIN Event Loops', vectorScore: 0.88, bm25Score: 0.72 },
-                    { title: 'Doc 3: Comparison of select vs poll vs epoll Latency', vectorScore: 0.81, bm25Score: 0.85 }
-                  ].map((doc, idx) => {
-                    const combinedScore = (doc.vectorScore * vectorWeight + doc.bm25Score * bm25Weight).toFixed(3);
-                    return (
-                      <div key={idx} className="p-3 rounded-lg bg-slate-850 border border-slate-800 flex items-center justify-between text-xs">
-                        <div className="flex items-center gap-3">
-                          <span className="w-5 h-5 rounded-full bg-indigo-600/30 text-indigo-300 flex items-center justify-center font-bold">
-                            #{idx + 1}
-                          </span>
-                          <span className="text-slate-200 font-medium">{doc.title}</span>
-                        </div>
-                        <span className="font-mono text-emerald-400 font-bold">Score: {combinedScore}</span>
+              <div className="space-y-1.5">
+                {[
+                  { title: 'Doc 1: Linux epoll(7) Kernel I/O Multiplexing Deep Dive', vectorScore: 0.94, bm25Score: 0.98 },
+                  { title: 'Doc 2: Non-Blocking Socket Operations and EPOLLIN Event Loops', vectorScore: 0.88, bm25Score: 0.72 },
+                  { title: 'Doc 3: Comparison of select vs poll vs epoll Latency', vectorScore: 0.81, bm25Score: 0.85 }
+                ].map((doc, idx) => {
+                  const combinedScore = (doc.vectorScore * vectorWeight + doc.bm25Score * bm25Weight).toFixed(3);
+                  return (
+                    <div key={idx} className="p-2.5 rounded bg-zinc-900 border border-zinc-850 flex items-center justify-between text-xs font-mono">
+                      <div className="flex items-center gap-2">
+                        <span className="text-zinc-500 font-semibold">#{idx + 1}</span>
+                        <span className="text-zinc-300 font-sans">{doc.title}</span>
                       </div>
-                    );
-                  })}
-                </div>
+                      <span className="text-zinc-200 font-semibold">{combinedScore}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
 
           {activeTopic.id === 'ai-agents-tool-calling' && (
-            <div className="p-6 rounded-2xl bg-slate-900 border border-indigo-900/50 space-y-4 shadow-xl">
+            <div className="p-5 rounded border border-zinc-800 bg-[#0c0c0e] space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <BrainCircuit className="w-5 h-5 text-indigo-400" />
-                  <h3 className="font-bold text-white text-base">Interactive ReAct Agent Loop Simulator</h3>
+                  <BrainCircuit className="w-4 h-4 text-zinc-400" />
+                  <h3 className="font-semibold text-xs font-mono uppercase text-zinc-200">
+                    ReAct Agent Loop Step Execution
+                  </h3>
                 </div>
                 <button
                   onClick={() => setAgentStep((prev) => (prev + 1) % agentSteps.length)}
-                  className="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium flex items-center gap-1.5 transition"
+                  className="px-2.5 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono flex items-center gap-1 transition"
                 >
-                  <Play className="w-3.5 h-3.5" />
-                  Next Step ({agentStep + 1}/{agentSteps.length})
+                  <Play className="w-3 h-3" />
+                  <span>Next Step ({agentStep + 1}/{agentSteps.length})</span>
                 </button>
               </div>
-              <p className="text-xs text-slate-400">
-                Trace how the agent progresses through Thought, Action (Tool Call), Observation (Output), and Resolution.
-              </p>
 
-              <div className="space-y-2.5">
+              <div className="space-y-2">
                 {agentSteps.slice(0, agentStep + 1).map((step, idx) => (
                   <div
                     key={idx}
-                    className={`p-3.5 rounded-xl border text-xs leading-relaxed animate-fade-in ${
-                      step.type === 'Thought'
-                        ? 'bg-slate-850 border-slate-700 text-slate-200'
-                        : step.type === 'Action'
-                        ? 'bg-amber-950/20 border-amber-800/40 text-amber-200 font-mono'
-                        : step.type === 'Observation'
-                        ? 'bg-cyan-950/20 border-cyan-800/40 text-cyan-200 font-mono'
-                        : 'bg-emerald-950/30 border-emerald-800/50 text-emerald-200 font-semibold'
-                    }`}
+                    className="p-3 rounded border border-zinc-800 bg-zinc-900 text-xs leading-relaxed font-mono"
                   >
-                    <span
-                      className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded mr-2 font-bold ${
-                        step.type === 'Thought'
-                          ? 'bg-slate-700 text-slate-300'
-                          : step.type === 'Action'
-                          ? 'bg-amber-900/80 text-amber-300'
-                          : step.type === 'Observation'
-                          ? 'bg-cyan-900/80 text-cyan-300'
-                          : 'bg-emerald-800 text-emerald-200'
-                      }`}
-                    >
+                    <span className="text-[10px] font-mono uppercase px-1.5 py-0.2 rounded mr-2 bg-zinc-800 text-zinc-300 font-semibold">
                       {step.type}
                     </span>
-                    {step.content}
+                    <span className="text-zinc-200 font-sans">{step.content}</span>
                   </div>
                 ))}
               </div>
@@ -317,23 +346,25 @@ export const AiHubView: React.FC<AiHubViewProps> = ({
           )}
 
           {/* Core Technical Concepts & Math */}
-          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
-            <div className="flex items-center gap-2 text-indigo-400">
-              <Layers className="w-5 h-5" />
-              <h3 className="text-lg font-bold text-white">Core Technical Concepts & Architectures</h3>
+          <div className="p-5 rounded border border-zinc-800 bg-[#0e0e11] space-y-3">
+            <div className="flex items-center gap-2 text-zinc-300">
+              <Layers className="w-4 h-4 text-zinc-400" />
+              <h3 className="text-sm font-semibold tracking-wide uppercase font-mono">
+                Technical Fundamentals & Mathematics
+              </h3>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {activeTopic.coreConcepts.map((concept, idx) => (
-                <div key={idx} className="p-4 rounded-xl bg-slate-850 border border-slate-800 space-y-2">
-                  <h4 className="font-bold text-sm text-slate-100">{concept.title}</h4>
-                  <p className="text-xs text-slate-300 leading-relaxed">{concept.description}</p>
+                <div key={idx} className="p-3.5 rounded bg-zinc-900/60 border border-zinc-800 space-y-1.5">
+                  <h4 className="font-semibold text-xs text-zinc-200">{concept.title}</h4>
+                  <p className="text-xs text-zinc-300 leading-relaxed font-sans">{concept.description}</p>
                   {concept.mathOrDiagram && (
-                    <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 font-mono text-xs text-cyan-300">
+                    <div className="p-2.5 rounded bg-[#09090b] border border-zinc-850 font-mono text-xs text-zinc-300">
                       {concept.mathOrDiagram}
                     </div>
                   )}
-                  <div className="text-xs text-slate-400 pt-1">
-                    <span className="font-semibold text-indigo-400">Production Impact: </span>
+                  <div className="text-xs text-zinc-400 font-sans">
+                    <span className="font-mono text-zinc-500 uppercase text-[10px]">Impact: </span>
                     {concept.practicalImpact}
                   </div>
                 </div>
@@ -342,10 +373,12 @@ export const AiHubView: React.FC<AiHubViewProps> = ({
           </div>
 
           {/* Functional Code Implementation */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-emerald-400">
-              <Terminal className="w-5 h-5" />
-              <h3 className="text-xl font-bold text-white">Reference Code Implementation</h3>
+          <div className="space-y-2.5">
+            <div className="flex items-center gap-2 text-zinc-300">
+              <Terminal className="w-4 h-4 text-zinc-400" />
+              <h3 className="text-sm font-semibold tracking-wide uppercase font-mono">
+                Production Implementation
+              </h3>
             </div>
             <CodeBlock
               code={activeTopic.codeImplementation.code}
@@ -356,39 +389,21 @@ export const AiHubView: React.FC<AiHubViewProps> = ({
           </div>
 
           {/* Production Best Practices */}
-          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
-            <div className="flex items-center gap-2 text-emerald-400">
-              <CheckCircle2 className="w-5 h-5" />
-              <h3 className="text-lg font-bold text-white">Production Best Practices & Guidelines</h3>
+          <div className="p-5 rounded border border-zinc-800 bg-[#0e0e11] space-y-2.5">
+            <div className="flex items-center gap-2 text-zinc-300">
+              <CheckCircle2 className="w-4 h-4 text-zinc-400" />
+              <h3 className="text-sm font-semibold tracking-wide uppercase font-mono">
+                Production Guardrails
+              </h3>
             </div>
-            <ul className="space-y-2.5">
+            <ul className="space-y-1.5 text-xs text-zinc-300 font-sans">
               {activeTopic.productionBestPractices.map((bp, idx) => (
-                <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
+                <li key={idx} className="flex items-start gap-2">
+                  <span className="w-1 h-1 rounded-full bg-zinc-500 mt-1.5 shrink-0"></span>
                   <span>{bp}</span>
                 </li>
               ))}
             </ul>
-          </div>
-
-          {/* Benchmarks & Real-World Pitfalls */}
-          <div className="p-6 rounded-2xl bg-slate-900 border border-rose-950/60 space-y-4">
-            <div className="flex items-center gap-2 text-rose-400">
-              <Cpu className="w-5 h-5" />
-              <h3 className="text-lg font-bold text-white">Critical Benchmarks & Architecture Pitfalls</h3>
-            </div>
-            <div className="space-y-3">
-              {activeTopic.benchmarksAndPitfalls.map((bp, idx) => (
-                <div key={idx} className="p-4 rounded-xl bg-rose-950/20 border border-rose-900/40 space-y-2">
-                  <span className="font-bold text-xs text-rose-300 block">{bp.benchmark}</span>
-                  <p className="text-xs text-slate-300">{bp.observation}</p>
-                  <div className="p-2.5 rounded-lg bg-slate-900 text-xs text-emerald-300 border border-slate-800">
-                    <span className="font-bold text-emerald-400">Engineering Workaround: </span>
-                    {bp.workaround}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>

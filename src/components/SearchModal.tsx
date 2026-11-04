@@ -44,16 +44,16 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onSel
       title: lvl.title,
       subtitle: `${lvl.badge} • ${lvl.experienceYears} • ${lvl.tagline}`,
       category: 'Career Progression',
-      icon: <Compass className="w-4 h-4 text-emerald-400" />
+      icon: <Compass className="w-3.5 h-3.5 text-zinc-400" />
     })),
-    // Tech Catalog
+    // Tech Catalog (Now includes Java, C++, C#, GraphQL/gRPC, Terraform!)
     ...techCatalogData.map((tech) => ({
       id: tech.id,
       tab: 'tech' as ActiveTab,
       title: tech.name,
       subtitle: `${tech.category} • ${tech.tagline}`,
       category: 'Technology Catalog',
-      icon: <Cpu className="w-4 h-4 text-cyan-400" />
+      icon: <Cpu className="w-3.5 h-3.5 text-zinc-400" />
     })),
     // AI Hub
     ...aiCatalogData.map((ai) => ({
@@ -62,7 +62,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onSel
       title: ai.title,
       subtitle: `${ai.category} • ${ai.difficulty} • ${ai.readTime}`,
       category: 'Artificial Intelligence',
-      icon: <Sparkles className="w-4 h-4 text-indigo-400" />
+      icon: <Sparkles className="w-3.5 h-3.5 text-zinc-400" />
     })),
     // Trending
     ...trendingTopicsData.map((trend) => ({
@@ -71,7 +71,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onSel
       title: trend.title,
       subtitle: `${trend.category} • Status: ${trend.status}`,
       category: "What's Trending",
-      icon: <TrendingUp className="w-4 h-4 text-amber-400" />
+      icon: <TrendingUp className="w-3.5 h-3.5 text-zinc-400" />
     })),
     // Learning Tracks
     ...learningTracksData.map((track) => ({
@@ -80,7 +80,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onSel
       title: track.title,
       subtitle: `${track.institutionInspiration} • ${track.duration}`,
       category: 'Learning Tracks',
-      icon: <GraduationCap className="w-4 h-4 text-purple-400" />
+      icon: <GraduationCap className="w-3.5 h-3.5 text-zinc-400" />
     })),
     // Interview Prep
     ...interviewQuestionsData.map((q) => ({
@@ -89,7 +89,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onSel
       title: q.question,
       subtitle: `${q.category} • Difficulty: ${q.difficulty}`,
       category: 'Interview Prep',
-      icon: <Briefcase className="w-4 h-4 text-rose-400" />
+      icon: <Briefcase className="w-3.5 h-3.5 text-zinc-400" />
     }))
   ];
 
@@ -121,14 +121,14 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onSel
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/75 backdrop-blur-sm animate-fade-in">
       <div
-        className="w-full max-w-2xl bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]"
+        className="w-full max-w-xl bg-[#0e0e11] border border-zinc-800 rounded shadow-2xl overflow-hidden flex flex-col max-h-[75vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar */}
-        <div className="flex items-center px-4 border-b border-slate-800 bg-slate-850">
-          <Search className="w-5 h-5 text-indigo-400 mr-3" />
+        <div className="flex items-center px-3.5 border-b border-zinc-800 bg-[#09090b]">
+          <Search className="w-4 h-4 text-zinc-500 mr-2.5" />
           <input
             ref={inputRef}
             type="text"
@@ -138,27 +138,27 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onSel
               setSelectedIndex(0);
             }}
             onKeyDown={handleKeyDown}
-            placeholder="Search technologies, career levels, AI topics, system design..."
-            className="w-full py-4 bg-transparent text-sm text-slate-100 placeholder-slate-400 focus:outline-none"
+            placeholder="Search all knowledge topics..."
+            className="w-full py-3 bg-transparent text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none font-mono"
           />
           {query && (
-            <button onClick={() => setQuery('')} className="p-1 text-slate-400 hover:text-slate-200">
-              <X className="w-4 h-4" />
+            <button onClick={() => setQuery('')} className="p-1 text-zinc-500 hover:text-zinc-300">
+              <X className="w-3.5 h-3.5" />
             </button>
           )}
           <kbd
             onClick={onClose}
-            className="cursor-pointer ml-3 text-[11px] font-mono bg-slate-800 text-slate-400 px-2 py-0.5 rounded border border-slate-700 hover:text-slate-200"
+            className="cursor-pointer ml-2.5 text-[10px] font-mono bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded border border-zinc-700"
           >
             ESC
           </kbd>
         </div>
 
         {/* Results List */}
-        <div className="flex-1 overflow-y-auto p-2 divide-y divide-slate-800/40">
+        <div className="flex-1 overflow-y-auto p-1.5 divide-y divide-zinc-850">
           {filtered.length === 0 ? (
-            <div className="py-12 text-center text-slate-400 text-sm">
-              No matching knowledge topics found for "{query}".
+            <div className="py-10 text-center text-zinc-500 text-xs font-mono">
+              No matching topics found for "{query}".
             </div>
           ) : (
             filtered.map((item, idx) => {
@@ -171,31 +171,31 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onSel
                     onClose();
                   }}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition ${
+                  className={`flex items-center justify-between p-2.5 rounded cursor-pointer transition ${
                     isSelected
-                      ? 'bg-indigo-600/20 text-white border border-indigo-500/30'
-                      : 'text-slate-300 hover:bg-slate-800/50'
+                      ? 'bg-zinc-800 text-zinc-100'
+                      : 'text-zinc-400 hover:bg-zinc-900/60'
                   }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-slate-800 border border-slate-700/60">
+                  <div className="flex items-center gap-2.5">
+                    <div className="p-1.5 rounded bg-zinc-900 border border-zinc-800">
                       {item.icon}
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-sm text-slate-100">
+                        <span className="font-medium text-xs text-zinc-200">
                           {item.title}
                         </span>
-                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-400">
+                        <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-zinc-850 text-zinc-400">
                           {item.category}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-400 line-clamp-1 mt-0.5">
+                      <p className="text-[11px] text-zinc-500 line-clamp-1">
                         {item.subtitle}
                       </p>
                     </div>
                   </div>
-                  <ArrowRight className={`w-4 h-4 ${isSelected ? 'text-indigo-400' : 'text-slate-600'}`} />
+                  <ArrowRight className={`w-3.5 h-3.5 ${isSelected ? 'text-zinc-300' : 'text-zinc-700'}`} />
                 </div>
               );
             })
@@ -203,13 +203,12 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onSel
         </div>
 
         {/* Footer shortcuts */}
-        <div className="px-4 py-2.5 bg-slate-950 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
-          <div className="flex items-center gap-4">
-            <span><kbd className="bg-slate-800 px-1 py-0.5 rounded text-slate-400">↑↓</kbd> to navigate</span>
-            <span><kbd className="bg-slate-800 px-1 py-0.5 rounded text-slate-400">↵</kbd> to select</span>
-            <span><kbd className="bg-slate-800 px-1 py-0.5 rounded text-slate-400">esc</kbd> to close</span>
+        <div className="px-3.5 py-2 bg-[#09090b] border-t border-zinc-800 flex items-center justify-between text-[10px] font-mono text-zinc-500">
+          <div className="flex items-center gap-3">
+            <span><kbd className="bg-zinc-800 px-1 py-0.2 rounded text-zinc-400">↑↓</kbd> navigate</span>
+            <span><kbd className="bg-zinc-800 px-1 py-0.2 rounded text-zinc-400">↵</kbd> select</span>
           </div>
-          <span className="font-mono text-indigo-400/80">{filtered.length} resources available</span>
+          <span>{filtered.length} references</span>
         </div>
       </div>
     </div>
