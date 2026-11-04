@@ -1,4 +1,5 @@
 import { TechDeepDive } from '../types';
+import { languageCurricula } from './languageCurriculum';
 
 export const techCatalogData: TechDeepDive[] = [
   {
@@ -8,6 +9,7 @@ export const techCatalogData: TechDeepDive[] = [
     tagline: 'Type-Safe Structural Typing, V8 Engine Internals, and Fullstack Scalability',
     iconName: 'Code2',
     popularityRank: '#1 Most Used by Developers Worldwide',
+    curriculum: languageCurricula['typescript'],
     historyAndEvolution: {
       originYear: 2012,
       creator: 'Anders Hejlsberg (Microsoft)',
@@ -207,6 +209,7 @@ export class NotificationDispatcher implements EventHandlerMap<DomainEvents> {
     tagline: 'Modern Asynchronous Concurrency, C-Extensions, and Machine Learning Backbone',
     iconName: 'Terminal',
     popularityRank: '#1 for AI, Data Science & Fast Backend APIs',
+    curriculum: languageCurricula['python'],
     historyAndEvolution: {
       originYear: 1991,
       creator: 'Guido van Rossum (Centrum Wiskunde & Informatica)',
@@ -338,6 +341,7 @@ if __name__ == "__main__":
     tagline: 'Goroutines, CSP Concurrency, Static Binaries, and Low-Latency Microservices',
     iconName: 'Cpu',
     popularityRank: '#1 for Cloud Native, Kubernetes, Docker & High-Scale Microservices',
+    curriculum: languageCurricula['golang'],
     historyAndEvolution: {
       originYear: 2009,
       creator: 'Robert Griesemer, Rob Pike, and Ken Thompson (Google)',
@@ -560,6 +564,7 @@ func main() {
     tagline: 'Zero-Cost Abstractions, Compile-Time Ownership, and Fearless Concurrency',
     iconName: 'ShieldCheck',
     popularityRank: '#1 Most Loved Language for 8 Consecutive Years',
+    curriculum: languageCurricula['rust'],
     historyAndEvolution: {
       originYear: 2010,
       creator: 'Graydon Hoare (Mozilla Research)',
@@ -1249,6 +1254,7 @@ echo "=== 5. eBPF Real-Time Tracing (Trace slow block I/O > 10ms) ==="
     tagline: 'Virtual Threads (Project Loom), ZGC Generational Garbage Collection & GraalVM Native Images',
     iconName: 'Coffee',
     popularityRank: '#1 Enterprise Banking & High-Throughput Global Backend Workloads',
+    curriculum: languageCurricula['java'],
     historyAndEvolution: {
       originYear: 1995,
       creator: 'James Gosling (Sun Microsystems)',
@@ -1425,6 +1431,7 @@ public class HighThroughputPaymentService {
     tagline: 'Concepts, Ranges, Coroutines, RAII, Memory Models & Direct Hardware Control',
     iconName: 'Cpu',
     popularityRank: '#1 for Ultra-Low-Latency Trading Engines, Game Engines & Operating Systems',
+    curriculum: languageCurricula['cpp-systems'],
     historyAndEvolution: {
       originYear: 1985,
       creator: 'Bjarne Stroustrup (Bell Labs)',
@@ -1595,6 +1602,7 @@ int main() {
     tagline: 'Tiered JIT Compilation, Span<T> Zero-Allocation Slices & High-Scale Kestrel Microservices',
     iconName: 'Code',
     popularityRank: 'Top Enterprise & Cloud Platform Language',
+    curriculum: languageCurricula['csharp-dotnet'],
     historyAndEvolution: {
       originYear: 2000,
       creator: 'Anders Hejlsberg (Microsoft)',

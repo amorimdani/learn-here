@@ -46,13 +46,15 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onSel
       category: 'Career Progression',
       icon: <Compass className="w-3.5 h-3.5 text-zinc-400" />
     })),
-    // Tech Catalog (Now includes Java, C++, C#, GraphQL/gRPC, Terraform!)
+    // Tech Catalog (Mapped to languages or systems)
     ...techCatalogData.map((tech) => ({
       id: tech.id,
-      tab: 'tech' as ActiveTab,
+      tab: (tech.category === 'Language' || tech.id === 'golang' || tech.id === 'rust' || tech.id === 'cpp-systems'
+        ? 'languages'
+        : 'systems') as ActiveTab,
       title: tech.name,
       subtitle: `${tech.category} • ${tech.tagline}`,
-      category: 'Technology Catalog',
+      category: tech.category === 'Language' || tech.id === 'golang' || tech.id === 'rust' || tech.id === 'cpp-systems' ? 'Programming Language' : 'Systems & Infrastructure',
       icon: <Cpu className="w-3.5 h-3.5 text-zinc-400" />
     })),
     // AI Hub

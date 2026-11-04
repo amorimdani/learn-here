@@ -1,23 +1,24 @@
 import { useState, useEffect } from 'react';
 import { Header, ActiveTab } from './components/Header';
 import { SearchModal } from './components/SearchModal';
-import { CareerProgressionView } from './components/CareerProgressionView';
-import { TechCatalogView } from './components/TechCatalogView';
+import { LanguagesHubView } from './components/LanguagesHubView';
+import { SystemsHubView } from './components/SystemsHubView';
 import { AiHubView } from './components/AiHubView';
-import { TrendingView } from './components/TrendingView';
-import { LearningTracksView } from './components/LearningTracksView';
+import { CareerProgressionView } from './components/CareerProgressionView';
 import { InterviewHubView } from './components/InterviewHubView';
+import { LearningTracksView } from './components/LearningTracksView';
+import { TrendingView } from './components/TrendingView';
 import { BookmarksView, BookmarkItem } from './components/BookmarksView';
 import { ArrowUpRight } from 'lucide-react';
 import { techCatalogData } from './data/techCatalog';
 
 export function App() {
-  const [activeTab, setActiveTab] = useState<ActiveTab>('career');
+  const [activeTab, setActiveTab] = useState<ActiveTab>('languages');
   const [searchOpen, setSearchOpen] = useState(false);
 
   // Sub-item direct navigation states
-  const [targetLevelId, setTargetLevelId] = useState<string | undefined>();
   const [targetTechId, setTargetTechId] = useState<string | undefined>();
+  const [targetLevelId, setTargetLevelId] = useState<string | undefined>();
   const [targetAiId, setTargetAiId] = useState<string | undefined>();
   const [targetTrendId, setTargetTrendId] = useState<string | undefined>();
   const [targetTrackId, setTargetTrackId] = useState<string | undefined>();
@@ -45,7 +46,6 @@ export function App() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.key === '/' || ((e.metaKey || e.ctrlKey) && e.key === 'k')) && !searchOpen) {
-        // Prevent default only if not inside an input/textarea
         const tag = (e.target as HTMLElement).tagName;
         if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
           e.preventDefault();
@@ -84,8 +84,8 @@ export function App() {
 
   const handleSelectSearchResult = (tab: ActiveTab, itemId: string) => {
     setActiveTab(tab);
+    if (tab === 'languages' || tab === 'systems') setTargetTechId(itemId);
     if (tab === 'career') setTargetLevelId(itemId);
-    if (tab === 'tech') setTargetTechId(itemId);
     if (tab === 'ai') setTargetAiId(itemId);
     if (tab === 'trending') setTargetTrendId(itemId);
     if (tab === 'learning') setTargetTrackId(itemId);
@@ -93,7 +93,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-indigo-600/40 selection:text-indigo-200">
+    <div className="min-h-screen flex flex-col bg-[#09090b] text-zinc-100 selection:bg-zinc-700 selection:text-white">
       {/* Top Header */}
       <Header
         activeTab={activeTab}
@@ -113,16 +113,16 @@ export function App() {
       />
 
       {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {activeTab === 'career' && (
-          <CareerProgressionView
-            selectedLevelId={targetLevelId}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {activeTab === 'languages' && (
+          <LanguagesHubView
+            selectedTechId={targetTechId}
             onBookmark={toggleBookmark}
             isBookmarked={isBookmarked}
           />
         )}
-        {activeTab === 'tech' && (
-          <TechCatalogView
+        {activeTab === 'systems' && (
+          <SystemsHubView
             selectedTechId={targetTechId}
             onBookmark={toggleBookmark}
             isBookmarked={isBookmarked}
@@ -135,9 +135,16 @@ export function App() {
             isBookmarked={isBookmarked}
           />
         )}
-        {activeTab === 'trending' && (
-          <TrendingView
-            selectedTrendId={targetTrendId}
+        {activeTab === 'career' && (
+          <CareerProgressionView
+            selectedLevelId={targetLevelId}
+            onBookmark={toggleBookmark}
+            isBookmarked={isBookmarked}
+          />
+        )}
+        {activeTab === 'interview' && (
+          <InterviewHubView
+            selectedQuestionId={targetQuestionId}
             onBookmark={toggleBookmark}
             isBookmarked={isBookmarked}
           />
@@ -149,9 +156,9 @@ export function App() {
             isBookmarked={isBookmarked}
           />
         )}
-        {activeTab === 'interview' && (
-          <InterviewHubView
-            selectedQuestionId={targetQuestionId}
+        {activeTab === 'trending' && (
+          <TrendingView
+            selectedTrendId={targetTrendId}
             onBookmark={toggleBookmark}
             isBookmarked={isBookmarked}
           />
@@ -177,28 +184,25 @@ export function App() {
               <span className="font-semibold text-zinc-200 text-xs">learn-here</span>
               <span className="text-zinc-600">•</span>
               <span className="text-[11px] text-zinc-400 font-sans">
-                Minimalist Engineering Knowledge Hub
+                Zero summaries. Complete progressive software engineering mastery.
               </span>
             </div>
 
             <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-zinc-400">
-              <button onClick={() => { setActiveTab('career'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-zinc-200">
-                Career
+              <button onClick={() => { setActiveTab('languages'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-zinc-200">
+                1. Languages
               </button>
-              <button onClick={() => { setActiveTab('tech'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-zinc-200">
-                Catalog ({techCatalogData.length})
+              <button onClick={() => { setActiveTab('systems'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-zinc-200">
+                2. Systems ({techCatalogData.length})
               </button>
               <button onClick={() => { setActiveTab('ai'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-zinc-200">
-                AI
+                3. AI
               </button>
-              <button onClick={() => { setActiveTab('trending'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-zinc-200">
-                Trending
-              </button>
-              <button onClick={() => { setActiveTab('learning'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-zinc-200">
-                Curriculums
+              <button onClick={() => { setActiveTab('career'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-zinc-200">
+                4. Career
               </button>
               <button onClick={() => { setActiveTab('interview'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-zinc-200">
-                Interviews
+                5. Interviews
               </button>
             </div>
           </div>

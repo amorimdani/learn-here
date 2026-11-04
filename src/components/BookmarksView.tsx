@@ -27,10 +27,11 @@ export const BookmarksView: React.FC<BookmarksViewProps> = ({
       case 'Career Level':
         return 'career';
       case 'Language':
+        return 'languages';
       case 'Systems & Distributed':
       case 'Cloud & DevOps':
       case 'Databases & APIs':
-        return 'tech';
+        return 'systems';
       case 'Artificial Intelligence':
         return 'ai';
       case "What's Trending":
@@ -40,7 +41,7 @@ export const BookmarksView: React.FC<BookmarksViewProps> = ({
       case 'Interview Question':
         return 'interview';
       default:
-        return 'career';
+        return 'languages';
     }
   };
 

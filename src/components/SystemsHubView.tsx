@@ -1,0 +1,326 @@
+import React, { useState } from 'react';
+import {
+  Server,
+  Layers,
+  Briefcase,
+  Terminal,
+  AlertOctagon,
+  Award,
+  CheckCircle,
+  Maximize2
+} from 'lucide-react';
+import { techCatalogData } from '../data/techCatalog';
+import { CodeBlock } from './CodeBlock';
+
+interface SystemsHubViewProps {
+  selectedTechId?: string;
+  onBookmark: (item: { id: string; title: string; category: string }) => void;
+  isBookmarked: (id: string) => boolean;
+}
+
+export const SystemsHubView: React.FC<SystemsHubViewProps> = ({
+  selectedTechId,
+  onBookmark,
+  isBookmarked
+}) => {
+  // Systems & Cloud category items
+  const systemItems = techCatalogData.filter(
+    (t) =>
+      t.category === 'Cloud & DevOps' ||
+      t.category === 'Systems & Distributed' ||
+      t.category === 'Databases & APIs'
+  );
+
+  const [activeTechId, setActiveTechId] = useState<string>(
+    selectedTechId && systemItems.some((s) => s.id === selectedTechId)
+      ? selectedTechId
+      : systemItems[0].id
+  );
+
+  const [showFullDiagram, setShowFullDiagram] = useState(false);
+
+  const activeTech = systemItems.find((s) => s.id === activeTechId) || systemItems[0];
+
+  return (
+    <div className="space-y-6 animate-fade-in text-zinc-200">
+      {/* Header */}
+      <div className="border-b border-zinc-800 pb-5 space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+          <div>
+            <span className="text-[11px] font-mono uppercase text-zinc-500 tracking-wider">
+              Distributed Systems & Cloud Infrastructure
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-100 font-serif-classic">
+              Systems, Cloud & Data Infrastructure
+            </h1>
+          </div>
+          <p className="text-xs text-zinc-400 font-mono">
+            {systemItems.length} core distributed infrastructure platforms
+          </p>
+        </div>
+
+        {/* Systems Selector Bar */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none pt-1">
+          {systemItems.map((sys) => {
+            const isSelected = activeTech.id === sys.id;
+            return (
+              <button
+                key={sys.id}
+                onClick={() => setActiveTechId(sys.id)}
+                className={`px-3 py-1.5 rounded text-xs transition font-mono whitespace-nowrap flex items-center gap-1.5 ${
+                  isSelected
+                    ? 'bg-zinc-100 text-zinc-950 font-semibold shadow-sm'
+                    : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-zinc-800'
+                }`}
+              >
+                <Server className="w-3 h-3" />
+                <span>{sys.name.split(' ')[0]}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Main Grid: Sidebar Navigator + Article Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Left Tech Selector Column */}
+        <div className="lg:col-span-4 space-y-2">
+          <div className="text-[11px] font-mono uppercase text-zinc-500 tracking-wider px-1">
+            Infrastructure Stack ({systemItems.length})
+          </div>
+          <div className="space-y-1.5">
+            {systemItems.map((tech) => {
+              const isSelected = activeTech.id === tech.id;
+              return (
+                <div
+                  key={tech.id}
+                  onClick={() => setActiveTechId(tech.id)}
+                  className={`p-3 rounded border cursor-pointer transition text-left ${
+                    isSelected
+                      ? 'bg-zinc-900 border-zinc-600 text-zinc-100'
+                      : 'bg-[#0e0e11] border-zinc-900/80 hover:bg-zinc-900/40 hover:border-zinc-800 text-zinc-400'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-0.5">
+                    <span className="font-semibold text-xs text-zinc-200">{tech.name}</span>
+                    <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-zinc-800 text-zinc-400">
+                      {tech.category}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-zinc-500 line-clamp-1">{tech.tagline}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Right Article Deep Dive Area */}
+        <div className="lg:col-span-8 space-y-8">
+          {/* Article Header Card */}
+          <div className="p-6 rounded border border-zinc-800 bg-[#0e0e11] space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 pb-3 border-b border-zinc-800/80">
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400">
+                  {activeTech.category}
+                </span>
+                <h2 className="text-2xl font-bold text-zinc-100 mt-0.5 font-serif-classic">
+                  {activeTech.name}
+                </h2>
+                <p className="text-zinc-400 text-xs mt-1">{activeTech.tagline}</p>
+              </div>
+              <button
+                onClick={() =>
+                  onBookmark({
+                    id: activeTech.id,
+                    title: activeTech.name,
+                    category: activeTech.category
+                  })
+                }
+                className={`px-3 py-1 rounded border text-xs font-mono transition flex items-center gap-1.5 ${
+                  isBookmarked(activeTech.id)
+                    ? 'bg-zinc-800 border-zinc-600 text-zinc-200'
+                    : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                <Award className="w-3 h-3" />
+                {isBookmarked(activeTech.id) ? 'Saved' : 'Save'}
+              </button>
+            </div>
+
+            <div className="text-xs font-mono text-zinc-400">
+              Industry Standard: <span className="text-zinc-200 font-semibold">{activeTech.popularityRank}</span>
+            </div>
+          </div>
+
+          {/* Architecture Schematic Diagram */}
+          {activeTech.architectureDiagram && (
+            <div className="p-5 rounded border border-zinc-800 bg-[#0c0c0e] space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-xs font-mono uppercase tracking-wider text-zinc-200">
+                  {activeTech.architectureDiagram.title}
+                </span>
+                <button
+                  onClick={() => setShowFullDiagram(!showFullDiagram)}
+                  className="text-xs font-mono text-zinc-400 hover:text-zinc-200 flex items-center gap-1"
+                >
+                  <Maximize2 className="w-3 h-3" />
+                  <span>{showFullDiagram ? 'Compact' : 'Expand'}</span>
+                </button>
+              </div>
+
+              <div
+                className={`overflow-hidden rounded border border-zinc-800/80 bg-[#08080a] p-2 transition-all ${
+                  showFullDiagram ? 'max-h-none' : 'max-h-[380px]'
+                }`}
+                dangerouslySetInnerHTML={{ __html: activeTech.architectureDiagram.svgContent }}
+              />
+
+              <p className="text-[11px] font-mono text-zinc-500 italic">
+                Fig 1.0 — {activeTech.architectureDiagram.caption}
+              </p>
+            </div>
+          )}
+
+          {/* Technical Internals */}
+          <div className="p-5 rounded border border-zinc-800 bg-[#0e0e11] space-y-3">
+            <div className="flex items-center gap-2 text-zinc-300">
+              <Layers className="w-4 h-4 text-zinc-400" />
+              <h3 className="text-sm font-semibold tracking-wide uppercase font-mono">
+                System Internals & Storage/Network Mechanics
+              </h3>
+            </div>
+            <div className="space-y-3">
+              {activeTech.deepTechnicalConcepts.map((concept, idx) => (
+                <div key={idx} className="p-3.5 rounded bg-zinc-900/60 border border-zinc-800 space-y-1.5">
+                  <h4 className="font-semibold text-xs text-zinc-200">{concept.title}</h4>
+                  <p className="text-xs text-zinc-300 leading-relaxed font-sans">{concept.explanation}</p>
+                  <div className="p-2.5 rounded bg-[#09090b] border border-zinc-850 text-xs text-zinc-400 font-mono">
+                    <span className="text-zinc-300 font-semibold block mb-0.5">Internals:</span>
+                    {concept.internals}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Industry Use Cases */}
+          <div className="p-5 rounded border border-zinc-800 bg-[#0e0e11] space-y-3">
+            <div className="flex items-center gap-2 text-zinc-300">
+              <Briefcase className="w-4 h-4 text-zinc-400" />
+              <h3 className="text-sm font-semibold tracking-wide uppercase font-mono">
+                Industry Case Studies & Scale Architectures
+              </h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {activeTech.realWorldUseCases.map((uc, idx) => (
+                <div key={idx} className="p-3.5 rounded bg-zinc-900/60 border border-zinc-800 space-y-1.5 text-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-zinc-100">{uc.exampleCompany}</span>
+                    <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-zinc-800 text-zinc-400">
+                      {uc.industry}
+                    </span>
+                  </div>
+                  <p className="text-zinc-300">
+                    <span className="text-zinc-500 font-mono text-[11px]">Problem: </span>
+                    {uc.problemSolved}
+                  </p>
+                  <p className="text-zinc-400 pt-1 border-t border-zinc-800/80">
+                    <span className="text-zinc-500 font-mono text-[11px]">Architecture Fit: </span>
+                    {uc.architectureFit}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Production Code Configurations */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-zinc-300">
+              <Terminal className="w-4 h-4 text-zinc-400" />
+              <h3 className="text-sm font-semibold tracking-wide uppercase font-mono">
+                Production Configs & Code
+              </h3>
+            </div>
+            {activeTech.codeExamples.map((snippet, idx) => (
+              <CodeBlock
+                key={idx}
+                code={snippet.code}
+                language={snippet.language}
+                title={snippet.title}
+                explanation={snippet.explanation}
+              />
+            ))}
+          </div>
+
+          {/* Implementation Roadmap */}
+          <div className="p-5 rounded border border-zinc-800 bg-[#0e0e11] space-y-3">
+            <div className="flex items-center gap-2 text-zinc-300">
+              <CheckCircle className="w-4 h-4 text-zinc-400" />
+              <h3 className="text-sm font-semibold tracking-wide uppercase font-mono">
+                Deployment & Orchestration Roadmap
+              </h3>
+            </div>
+            <div className="space-y-3">
+              {activeTech.gettingStartedRoadmap.map((step) => (
+                <div key={step.step} className="p-3.5 rounded bg-zinc-900/60 border border-zinc-800 space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-5 h-5 rounded bg-zinc-800 text-zinc-300 font-mono font-semibold text-xs flex items-center justify-center border border-zinc-700">
+                      {step.step}
+                    </span>
+                    <h4 className="font-semibold text-xs text-zinc-200">{step.phase}</h4>
+                  </div>
+                  <ul className="space-y-1 pl-7 text-xs text-zinc-300 font-sans">
+                    {step.actionableTasks.map((task, tIdx) => (
+                      <li key={tIdx} className="list-disc">
+                        {task}
+                      </li>
+                    ))}
+                  </ul>
+                  {step.keyCommands.length > 0 && (
+                    <div className="pl-7 pt-1">
+                      <div className="p-2 rounded bg-[#09090b] font-mono text-xs text-zinc-300 border border-zinc-800 flex flex-wrap gap-2">
+                        {step.keyCommands.map((cmd, cIdx) => (
+                          <span key={cIdx} className="bg-zinc-850 px-1.5 py-0.5 rounded text-zinc-300">
+                            $ {cmd}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Pitfalls & Fixes */}
+          <div className="p-5 rounded border border-zinc-800 bg-[#0e0e11] space-y-3">
+            <div className="flex items-center gap-2 text-zinc-300">
+              <AlertOctagon className="w-4 h-4 text-zinc-400" />
+              <h3 className="text-sm font-semibold tracking-wide uppercase font-mono">
+                Production Pitfalls & Architectural Remediation
+              </h3>
+            </div>
+            <div className="space-y-2.5">
+              {activeTech.commonPitfalls.map((pitfall, idx) => (
+                <div key={idx} className="p-3.5 rounded bg-zinc-900/60 border border-zinc-800 space-y-1.5 text-xs">
+                  <div className="font-semibold text-zinc-200">
+                    <span className="text-zinc-500 font-mono uppercase text-[10px]">Mistake: </span>
+                    {pitfall.mistake}
+                  </div>
+                  <div className="text-zinc-400">
+                    <span className="text-zinc-500 font-mono uppercase text-[10px]">Why it hurts: </span>
+                    {pitfall.whyItHurts}
+                  </div>
+                  <div className="p-2 rounded bg-[#09090b] text-zinc-300 border border-zinc-800/80 font-mono">
+                    <span className="text-zinc-400 font-semibold">Solution: </span>
+                    {pitfall.solution}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

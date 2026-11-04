@@ -48,6 +48,21 @@ export interface CodeSnippet {
   runnableNotes?: string;
 }
 
+export interface LanguageLesson {
+  id: string;
+  topicNumber: number;
+  title: string;
+  category: 'Fundamentals' | 'Data Structures' | 'Functions & Types' | 'Concurrency & Memory';
+  summary: string;
+  conceptDeepDive: string;
+  codeSnippet: {
+    language: string;
+    code: string;
+    explanation: string;
+  };
+  keyTakeaways: string[];
+}
+
 export interface TechDeepDive {
   id: string;
   name: string;
@@ -55,6 +70,7 @@ export interface TechDeepDive {
   tagline: string;
   iconName: string;
   popularityRank: string;
+  curriculum?: LanguageLesson[];
   historyAndEvolution: {
     originYear: number;
     creator: string;
